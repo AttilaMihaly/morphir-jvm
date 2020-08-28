@@ -1,6 +1,4 @@
-package morphir.sdk
-
-import morphir.sdk.Bool.Bool
+package morphir.sdk.Bool
 import morphir.sdk.List.List
 import morphir.sdk.Maybe.Maybe
 

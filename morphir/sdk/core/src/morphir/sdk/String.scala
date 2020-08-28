@@ -5,6 +5,8 @@ import morphir.sdk.Maybe.Maybe
 object String {
   type String = scala.Predef.String
 
+  def String(string: scala.Predef.String): String = string
+
   @inline def isEmpty(str: String): Boolean = str.isEmpty()
 
   @inline def length(str: String): Int = str.length()
@@ -43,7 +45,7 @@ object String {
 
   @inline def trim(text: String): String = text.trim()
 
-  def join(sep: Char)(chunks: List[String]): String = chunks.mkString(sep.toString())
+  def join(sep: String, chunks: List[String]): String = chunks.mkString(sep)
 
   def words(str: String): List[String] = str.split("\\s").toList
 

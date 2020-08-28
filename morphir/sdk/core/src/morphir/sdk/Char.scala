@@ -67,7 +67,7 @@ object Char {
   def fromCode(codePoint: Int): Char =
     UnicodeChar(codePoint)
 
-  def from(ch: scala.Char): Char = UnicodeChar(ch.toInt)
+  def Char(ch: scala.Char): Char = UnicodeChar(ch.toInt)
   def from(ch: Int): Char        = UnicodeChar(ch)
 
 }

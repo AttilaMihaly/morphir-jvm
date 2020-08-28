@@ -7,6 +7,8 @@ object Int {
   type Int32 = scala.Int
   type Int64 = scala.Long
 
+  def apply(int: scala.Int): Int = int
+
   @inline def divide(dividend: Int)(divisor: Int): Int = dividend / divisor
   @inline def divide(dividend: Int8)(divisor: Int8): Int8 =
     (dividend / divisor).toByte
