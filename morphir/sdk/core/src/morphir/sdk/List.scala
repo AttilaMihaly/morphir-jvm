@@ -17,7 +17,7 @@ limitations under the License.
 package morphir.sdk
 
 import morphir.sdk.Basics.{Bool, Int}
-import morphir.sdk.Maybe.{Just, Maybe}
+import morphir.sdk.Maybe.{Just, Maybe, Nothing}
 
 object List {
   type List[+A] = scala.List[A]
@@ -61,6 +61,26 @@ object List {
     def fn(a: A, b: B): B = f(a)(b)
     xs.foldRight(initial)(fn)
   }
+
+  def minimum[A](list: List[A])(implicit ordering: Ordering[A]): Maybe[A] =
+    if (list.isEmpty) {
+      Nothing
+    } else {
+      Just(list.reduce(ordering.min))
+    }
+
+  def maximum[A](list: List[A])(implicit ordering: Ordering[A]): Maybe[A] =
+    if (list.isEmpty) {
+      Nothing
+    } else {
+      Just(list.reduce(ordering.max))
+    }
+
+  def sum[A](list: List[A])(implicit numeric: Numeric[A]): A =
+    list.foldRight(numeric.zero)(numeric.plus)
+
+  def product[A](list: List[A])(implicit numeric: Numeric[A]): A =
+    list.foldRight(numeric.zero)(numeric.times)
 
   @inline def head[A](xs: List[A]): Maybe[A] = xs.headOption
 
