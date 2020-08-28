@@ -1,8 +1,25 @@
+/*
+Copyright 2020 Morgan Stanley
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
 package morphir.sdk
 
 import morphir.sdk.Maybe._
 
-sealed abstract class Result[+E, +A] extends Product with Serializable {
+sealed abstract class Result[+E, +A] extends Product with Serializable { self =>
 
   def isOk: Boolean
 
@@ -15,6 +32,7 @@ sealed abstract class Result[+E, +A] extends Product with Serializable {
     }
 
   def getOrElse[A1 >: A](fallbackValue: A1): A1
+  @inline def withDefault[A1 >: A](fallbackValue: A1): A1 = getOrElse(fallbackValue)
 
   def map[A1](fn: A => A1): Result[E, A1] =
     this match {
@@ -24,9 +42,22 @@ sealed abstract class Result[+E, +A] extends Product with Serializable {
 
   def mapError[E1 >: E](fn: E => E1): Result[E1, A]
 
+  def toOption: Option[A] = self match {
+    case Result.Ok(value) => Option(value)
+    case Result.Err(_)    => None
+  }
+
+  def toMaybe: Maybe[A] =
+    self match {
+      case Result.Ok(value) => Maybe.just(value)
+      case _                => Maybe.nothing
+    }
+
 }
 
 object Result {
+
+  type Result[+E, +A] = morphir.sdk.Result[E, A]
 
   case class Ok[+E, +A](value: A) extends Result[E, A] {
 
