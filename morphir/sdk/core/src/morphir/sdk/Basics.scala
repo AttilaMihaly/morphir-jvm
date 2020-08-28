@@ -22,15 +22,15 @@ object Basics {
 
   type Bool = Boolean
 
-  val True: Bool  = true
+  val True: Bool = true
   val False: Bool = false
 
   def Bool(bool: Boolean): Bool = bool
 
-  @inline def and(a: Bool)(b: Bool): Bool   = a && b
-  @inline def not(value: Bool): Bool        = !value
-  @inline def or(a: Bool)(b: Bool): Bool    = a || b
-  @inline def xor(a: Bool)(b: Bool): Bool   = a ^ b
+  @inline def and(a: Bool, b: Bool): Bool = a && b
+  @inline def not(value: Bool): Bool = !value
+  @inline def or(a: Bool, b: Bool): Bool = a || b
+  @inline def xor(a: Bool, b: Bool): Bool = a ^ b
   @inline def toString(value: Bool): String = value.toString
 
   @inline def equal[A](a: A, b: A): morphir.sdk.Basics.Bool =
@@ -39,16 +39,24 @@ object Basics {
   @inline def notEqual[A](a: A, b: A): morphir.sdk.Basics.Bool =
     a != b
 
-  def lessThan[A](a: A, b: A)(implicit ordering: Ordering[A]): morphir.sdk.Basics.Bool =
+  def lessThan[A](a: A, b: A)(
+      implicit ordering: Ordering[A]
+  ): morphir.sdk.Basics.Bool =
     ordering.lt(a, b)
 
-  def greaterThan[A](a: A, b: A)(implicit ordering: Ordering[A]): morphir.sdk.Basics.Bool =
+  def greaterThan[A](a: A, b: A)(
+      implicit ordering: Ordering[A]
+  ): morphir.sdk.Basics.Bool =
     ordering.gt(a, b)
 
-  def lessThanOrEqual[A](a: A, b: A)(implicit ordering: Ordering[A]): morphir.sdk.Basics.Bool =
+  def lessThanOrEqual[A](a: A, b: A)(
+      implicit ordering: Ordering[A]
+  ): morphir.sdk.Basics.Bool =
     ordering.lteq(a, b)
 
-  def greaterThanOrEqual[A](a: A, b: A)(implicit ordering: Ordering[A]): morphir.sdk.Basics.Bool =
+  def greaterThanOrEqual[A](a: A, b: A)(
+      implicit ordering: Ordering[A]
+  ): morphir.sdk.Basics.Bool =
     ordering.gteq(a, b)
 
   def min[A](a: A, b: A)(implicit ordering: Ordering[A]): A =
@@ -66,9 +74,6 @@ object Basics {
   def multiply[A](left: A, right: A)(implicit numeric: Numeric[A]): A =
     numeric.times(left, right)
 
-  def power[A](left: A, right: A)(implicit numeric: Numeric[A]): A =
-    numeric.po
-
   def abs[A](value: A)(implicit numeric: Numeric[A]): A =
     numeric.abs(value)
 
@@ -79,7 +84,8 @@ object Basics {
 
   def Int(int: scala.Int): Int = int
 
-  @inline def integerDivide(dividend: Int, divisor: Int): Int = dividend / divisor
+  @inline def integerDivide(dividend: Int, divisor: Int): Int =
+    dividend / divisor
 
   @inline def modBy(divisor: Int, dividend: Int): Int = (dividend % divisor).abs
 
@@ -89,7 +95,8 @@ object Basics {
 
   def Float(double: scala.Double): Float = double
 
-  @inline def divide(dividend: Float, divisor: Float): Float = dividend / divisor
+  @inline def divide(dividend: Float, divisor: Float): Float =
+    dividend / divisor
 
   def identity[A](a: A): A = Predef.identity(a)
 
