@@ -12,11 +12,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-*/
-
+ */
 
 package morphir.sdk
 
+import morphir.sdk.Basics.Int
 import morphir.sdk.Maybe.Maybe
 
 object String {
@@ -30,9 +30,14 @@ object String {
 
   @inline def reverse(str: String): String = str.reverse
 
-  def repeat(times: Int, str: String): String = Array.fill[String](times)(str).mkString
+  def repeat(times: Int, str: String): String =
+    Array.fill[String](times.intValue)(str).mkString
 
-  @inline def replace(literal: String, replacement: String, target: String): String =
+  @inline def replace(
+      literal: String,
+      replacement: String,
+      target: String
+  ): String =
     target.replace(literal, replacement)
 
   @inline def fromInt(int: Int): String =
@@ -68,25 +73,32 @@ object String {
 
   def lines(str: String): List[String] = str.split("\\n").toList
 
-  def slice(start: Int)(end: Int)(str: String): String = str.substring(start, end)
+  def slice(start: Int)(end: Int)(str: String): String =
+    str.substring(start.intValue, end.intValue)
 
-  def left(n: Int)(str: String): String = str.substring(0, n)
+  def left(n: Int)(str: String): String = str.substring(0, n.intValue)
 
-  def right(n: Int)(str: String): String = str.slice(str.length - n, str.length)
+  def right(n: Int)(str: String): String =
+    str.slice(str.length - n.intValue, str.length)
 
-  def dropLeft(n: Int)(str: String): String = str.drop(n)
+  def dropLeft(n: Int)(str: String): String = str.drop(n.intValue)
 
-  def dropRight(n: Int)(str: String): String = str.dropRight(n)
+  def dropRight(n: Int)(str: String): String = str.dropRight(n.intValue)
 
-  def contains(substring: String)(str: String): Boolean = str.contains(substring)
+  def contains(substring: String)(str: String): Boolean =
+    str.contains(substring)
 
-  def startsWith(substring: String)(str: String): Boolean = str.startsWith(substring)
+  def startsWith(substring: String)(str: String): Boolean =
+    str.startsWith(substring)
 
-  def endsWith(substring: String)(str: String): Boolean = str.endsWith(substring)
+  def endsWith(substring: String)(str: String): Boolean =
+    str.endsWith(substring)
 
-  def indexes(substring: String)(str: String): List[Int] = str.r.findAllMatchIn(substring).map(_.start).toList
+  def indexes(substring: String)(str: String): List[Int] =
+    str.r.findAllMatchIn(substring).map(x => Int(x.start)).toList
 
-  def indices(substring: String)(str: String): List[Int] = indexes(substring)(str)
+  def indices(substring: String)(str: String): List[Int] =
+    indexes(substring)(str)
 
   def toFloat(str: String): Maybe[Float] =
     try {
@@ -112,7 +124,7 @@ object String {
 
   def fromList(chList: List[Char]): String = chList.mkString
 
-  def pad(n: Int)(ch: Char)(str: String): String = str.padTo(n, ch)
+  def pad(n: Int)(ch: Char)(str: String): String = str.padTo(n.intValue, ch)
 
   def padLeft(n: Int)(ch: Char)(str: String): String = ???
 
